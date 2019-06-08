@@ -1,15 +1,19 @@
-import * as fs from 'fs'
-import * as dotenv from 'dotenv'
+import { readFileSync, writeFileSync } from 'fs'
+import pack from '../package.json'
+import { config } from 'dotenv'
+import { transform } from '@babel/core'
 
-dotenv.config()
+config()
 
-let content = fs.readFileSync('src/index.js', 'utf8')
+let content = readFileSync('src/index.js', 'utf8')
 
 content = helpersParsed(content)
 content = algoliaParsed(content)
 content = apiParsed(content)
 
-fs.writeFileSync('index.js', content)
+content = transform(content, { presets: [['@babel/preset-env'], ['minify']] }).code
+
+writeFileSync('index.js', `// Version: ${pack.version}\n ${content}`)
 
 function parseSimple(content1, content2, where) {
   const imports = content2.match(/import (.*) from (.*)/g).join('\n')
@@ -25,12 +29,12 @@ function parseSimple(content1, content2, where) {
 }
 
 function apiParsed(content) {
-  let api = fs.readFileSync('src/api.js', 'utf8')
+  let api = readFileSync('src/api.js', 'utf8')
   return parseSimple(content, api, 'api')
 }
 
 function algoliaParsed(content) {
-  let algolia = fs.readFileSync('src/algolia.js', 'utf8')
+  let algolia = readFileSync('src/algolia.js', 'utf8')
   const parsed = parseSimple(content, algolia, 'algolia')
   return parsed
     .replace('process.env.MESALVA_ALGOLIA_ID', `'${process.env.MESALVA_ALGOLIA_ID}'`)
@@ -38,7 +42,7 @@ function algoliaParsed(content) {
 }
 
 function helpersParsed(content) {
-  const helpers = fs.readFileSync('src/helpers.js', 'utf8')
+  const helpers = readFileSync('src/helpers.js', 'utf8')
   const helpersVars = getExportVars(helpers)
   return content.replace(/import .* from '\.\/helpers'/, functionify(helpers, helpersVars))
 }

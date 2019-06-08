@@ -3,6 +3,7 @@
 [![npm version](https://badge.fury.io/js/%40mesalva%2Fb2b-api.svg)](https://badge.fury.io/js/%40mesalva%2Fb2b-api)
 [![Maintainability](https://api.codeclimate.com/v1/badges/9f6010a2794030533e41/maintainability)](https://codeclimate.com/repos/5cfbe591b7c889010b0011ef/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/9f6010a2794030533e41/test_coverage)](https://codeclimate.com/repos/5cfbe591b7c889010b0011ef/test_coverage)
+[![Build Status](https://semaphoreci.com/api/v1/andre-antunes/js-b2b-api/branches/master/shields_badge.svg)](https://semaphoreci.com/andre-antunes/js-b2b-api)
 
 ## Introduction
 

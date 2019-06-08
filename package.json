@@ -7,9 +7,9 @@
     "index.js"
   ],
   "scripts": {
-    "build": "sh bin/build.sh",
+    "build": "babel-node bin/build.js",
     "test": "jest",
-    "test:coverage": "jest --updateSnapshot --coverage --collectCoverageFrom=src/*.js"
+    "test:coverage": "jest --updateSnapshot --coverage --collectCoverageFrom=src/**/*.js"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "algoliasearch": "^3.33.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "babel-jest": "^24.8.0",
