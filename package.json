@@ -1,0 +1,28 @@
+{
+  "name": "@mesalva/b2b-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mesalva/js-b2b-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mesalva/js-b2b-api/issues"
+  },
+  "homepage": "https://github.com/mesalva/js-b2b-api#readme",
+  "dependencies": {
+    "@mesalva/api": "^1.0.2",
+    "algoliasearch": "^3.33.0"
+  },
+  "devDependencies": {
+    "babel-jest": "^24.8.0",
+    "jest": "^24.8.0",
+    "raf": "^3.4.1"
+  }
+}
