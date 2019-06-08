@@ -8,7 +8,8 @@
   ],
   "scripts": {
     "build": "sh bin/build.sh",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --updateSnapshot --coverage --collectCoverageFrom=src/*.js"
   },
   "repository": {
     "type": "git",
