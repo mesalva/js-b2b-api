@@ -1,6 +1,6 @@
 {
   "name": "@mesalva/b2b-api",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "",
   "main": "index.js",
   "files": [
@@ -19,6 +19,11 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mesalva/js-b2b-api/issues"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "__tests__/__mocks__"
+    ]
   },
   "homepage": "https://github.com/mesalva/js-b2b-api#readme",
   "dependencies": {
