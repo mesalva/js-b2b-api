@@ -1,4 +1,10 @@
-import { joinContentStructure, metaEntity, addChildrenPermalink, joinMediumInfo } from '../src/helpers'
+import {
+  joinContentStructure,
+  metaEntity,
+  addChildrenPermalink,
+  joinMediumInfo,
+  getAuthenticator,
+} from '../src/helpers'
 
 describe('joinContentStructure', () => {
   const mockChild = {
@@ -108,4 +114,40 @@ describe('joinMediumInfo', () => {
   test('with valid params', () => testMediumInfo(true, 200, 'application/json'))
   test('with invalid status', () => testMediumInfo(false, 404, 'application/json'))
   test('with invalid content-type', () => testMediumInfo(false, 200, 'text/html'))
+})
+
+describe('getAuthenticator', () => {
+  test('with accessToen', () => {
+    getAuthenticator(null, null, 'xyz', null).then(res => {
+      expect(res).toBe(undefined)
+    })
+  })
+  test('with accessToken', () => {
+    let expected = false
+    const call = () => (expected = true)
+    const mockModel = () => ({
+      request: ({ data }) => {
+        if (data.email === 'correct@uid.com') return Promise.resolve({ headers: {} })
+        return Promise.reject({})
+      },
+    })
+    expect(expected).toBe(false)
+    getAuthenticator(mockModel, { MESALVA_USER: 'correct@uid.com' }, null, call).then(() => expect(expected).toBe(true))
+  })
+  test('with invalid uid', () => {
+    let expectedSuccess = false
+    let expectedFail = false
+    const call = () => (expectedSuccess = true)
+    const mockModel = () => ({
+      request: ({ data }) => {
+        if (data.email === 'correct@uid.com') return Promise.resolve({ headers: {} })
+        expectedFail = true
+        return Promise.reject({})
+      },
+    })
+    expect(expectedSuccess).toBe(false)
+    getAuthenticator(mockModel, { MESALVA_USER: 'wrong@uid.com' }, null, call)
+      .then(() => expect(expectedSuccess).toBe(true))
+      .catch(() => expect(expectedFail).toBe(true))
+  })
 })

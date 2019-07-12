@@ -33,7 +33,7 @@ const search = key => {
 export default function MeSalva(env) {
   let credentials = {}
   const Model = modelMaker(env, () => credentials)
-  const authenticate = getAuthenticator(Model, env, credentials.accessToken, value => (credentials = value))
+  const authenticate = () => getAuthenticator(Model, env, credentials.accessToken, value => (credentials = value))
   this.getMedium = getMedium(env, Model, credentials, authenticate)
   this.getContent = getContent(Model)
   this.search = search

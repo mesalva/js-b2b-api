@@ -18,16 +18,14 @@ export const addChildrenPermalink = parentPermalink => ({ children = [], ...enti
 }
 
 export const getAuthenticator = (Model, env, accessToken, callback) => {
-  return () => {
-    if (accessToken) return Promise.resolve()
-    return Model('user/sign_in')
-      .request({
-        method: 'POST',
-        data: { email: env.MESALVA_USER, password: env.MESALVA_PASSWORD },
-      })
-      .then(onlyUserHeaderCredentials)
-      .then(callback)
-  }
+  if (accessToken) return Promise.resolve()
+  return Model('user/sign_in')
+    .request({
+      method: 'POST',
+      data: { email: env.MESALVA_USER, password: env.MESALVA_PASSWORD },
+    })
+    .then(onlyUserHeaderCredentials)
+    .then(callback)
 }
 
 export const joinMediumInfo = (full, env) => medium => {

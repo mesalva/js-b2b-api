@@ -39,10 +39,6 @@ MESALVA_HMAC, MESALVA_USER, MESALVA_PASSWORD, MESALVA_API, MESALVA_CLIENT
 
 ## Usage
 
-Creating a model
-
-[./examples/ExampleModelA.js](https://github.com/mesalva/js-api-request/blob/doc/readme/examples/ExampleModelA.js)
-
 ```js
 import MeSalva from '@mesalva/b2b-api'
 const MeSalvaApi = new MeSalva({ MESALVA_HMAC, MESALVA_USER, MESALVA_PASSWORD, MESALVA_API, MESALVA_CLIENT })
