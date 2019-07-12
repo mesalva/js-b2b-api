@@ -49,5 +49,6 @@ const MeSalvaApi = new MeSalva({ MESALVA_HMAC, MESALVA_USER, MESALVA_PASSWORD, M
 
 MeSalvaApi.search("Any query")
 MeSalvaApi.getContent("a-permalink/public/inside/mesalva")
-MeSalvaApi.getMedium("a-permalink/permalink/of-a-lesson")//Will need authentication
+MeSalvaApi.getMedium("a-permalink/permalink/of-a-lesson")//Will need authentication, fetch full content (with samba infos)
+MeSalvaApi.getMedium("a-permalink/permalink/of-a-lesson", false)//Will need authentication, without samba infos
 ```
