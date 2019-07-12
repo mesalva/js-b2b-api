@@ -92,39 +92,20 @@ describe('joinMediumInfo', () => {
     joinMediumInfo(true, {})({ videoId: 'xyz' }).then(res => expect(res).toEqual({ videoId: 'xyz' }))
   })
 
-  test('with valid params', () => {
+  const testMediumInfo = (withInfos, status, contentType) => {
     const medium = { videoId: 'xyz', provider: 'sambatech' }
     const env = { MESALVA_USER: 'valid@parner.com' }
     const mockInfos = { someInfo: 'someValue' }
     global.fetch = jest.fn(() => {
-      return Promise.resolve({ headers: { get: () => 'json' }, json: () => mockInfos })
+      return Promise.resolve({ status, headers: { get: () => contentType }, json: () => mockInfos })
     })
     joinMediumInfo(true, env)(medium).then(res => {
-      expect(res).toEqual({ ...medium, infos: mockInfos })
-    })
-  })
-
-  test('with invalid status', () => {
-    const medium = { videoId: 'xyz', provider: 'sambatech' }
-    const env = { MESALVA_USER: 'valid@parner.com' }
-    const mockInfos = { someInfo: 'someValue' }
-    global.fetch = jest.fn(() => {
-      return Promise.resolve({ status: 404, headers: { get: () => 'json' }, json: () => mockInfos })
-    })
-    joinMediumInfo(true, env)(medium).then(res => {
+      if (withInfos) return expect(res).toEqual({ ...medium, infos: mockInfos })
       expect(res).toEqual(medium)
     })
-  })
+  }
 
-  test('with invalid content-type', () => {
-    const medium = { videoId: 'xyz', provider: 'sambatech' }
-    const env = { MESALVA_USER: 'valid@parner.com' }
-    const mockInfos = { someInfo: 'someValue' }
-    global.fetch = jest.fn(() => {
-      return Promise.resolve({ status: 404, headers: { get: () => 'text/html' }, json: () => mockInfos })
-    })
-    joinMediumInfo(true, env)(medium).then(res => {
-      expect(res).toEqual(medium)
-    })
-  })
+  test('with valid params', () => testMediumInfo(true, 200, 'application/json'))
+  test('with invalid status', () => testMediumInfo(false, 404, 'application/json'))
+  test('with invalid content-type', () => testMediumInfo(false, 200, 'text/html'))
 })
