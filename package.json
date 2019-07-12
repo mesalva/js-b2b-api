@@ -9,6 +9,7 @@
   "scripts": {
     "build": "babel-node bin/build.js",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:coverage": "jest --updateSnapshot --coverage --collectCoverageFrom=src/**/*.js"
   },
   "repository": {

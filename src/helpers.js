@@ -31,7 +31,7 @@ export const getAuthenticator = (Model, env, accessToken, callback) => {
 }
 
 export const joinMediumInfo = (full, env) => medium => {
-  if (!full || !medium.videoId || medium.provider !== 'sambatech') return medium
+  if (!full || !medium.videoId || medium.provider !== 'sambatech') return Promise.resolve(medium)
   return fetch(`${process.env.BFF_URL}/b2b/samba-video-mp4/${medium.videoId}`, { headers: getBffHeaders(env) })
     .then(r => {
       if (r.status >= 300) return Promise.reject(r)
