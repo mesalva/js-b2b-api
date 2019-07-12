@@ -8,6 +8,8 @@
   ],
   "scripts": {
     "build": "babel-node bin/build.js",
+    "lint": "npx prettier --write '{src,__tests__}/**/*.js'",
+    "lint:check": "prettier -l '{src,__tests__}/**/*.js'",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --updateSnapshot --coverage --collectCoverageFrom=src/**/*.js"
