@@ -1,4 +1,4 @@
-import { joinContentStructure, metaEntity, addChildrenPermalink } from '../src/helpers'
+import { joinContentStructure, metaEntity, addChildrenPermalink, joinMediumInfo } from '../src/helpers'
 
 describe('joinContentStructure', () => {
   const mockChild = {
@@ -81,6 +81,50 @@ describe('addChildrenPermalink', () => {
     const mockChild2 = { name: 'Some Child Name', slug: 'some-child-slug' }
     expect(testter({ children: [mockChild1, mockChild2] })).toEqual({
       children: [mockChild1, { ...mockChild2, permalink: `parent-permalink/${mockChild2.slug}` }],
+    })
+  })
+})
+
+describe('joinMediumInfo', () => {
+  test('without valid params', () => {
+    joinMediumInfo(false, {})({}).then(res => expect(res).toEqual({}))
+    joinMediumInfo(true, {})({}).then(res => expect(res).toEqual({}))
+    joinMediumInfo(true, {})({ videoId: 'xyz' }).then(res => expect(res).toEqual({ videoId: 'xyz' }))
+  })
+
+  test('with valid params', () => {
+    const medium = { videoId: 'xyz', provider: 'sambatech' }
+    const env = { MESALVA_USER: 'valid@parner.com' }
+    const mockInfos = { someInfo: 'someValue' }
+    global.fetch = jest.fn(() => {
+      return Promise.resolve({ headers: { get: () => 'json' }, json: () => mockInfos })
+    })
+    joinMediumInfo(true, env)(medium).then(res => {
+      expect(res).toEqual({ ...medium, infos: mockInfos })
+    })
+  })
+
+  test('with invalid status', () => {
+    const medium = { videoId: 'xyz', provider: 'sambatech' }
+    const env = { MESALVA_USER: 'valid@parner.com' }
+    const mockInfos = { someInfo: 'someValue' }
+    global.fetch = jest.fn(() => {
+      return Promise.resolve({ status: 404, headers: { get: () => 'json' }, json: () => mockInfos })
+    })
+    joinMediumInfo(true, env)(medium).then(res => {
+      expect(res).toEqual(medium)
+    })
+  })
+
+  test('with invalid content-type', () => {
+    const medium = { videoId: 'xyz', provider: 'sambatech' }
+    const env = { MESALVA_USER: 'valid@parner.com' }
+    const mockInfos = { someInfo: 'someValue' }
+    global.fetch = jest.fn(() => {
+      return Promise.resolve({ status: 404, headers: { get: () => 'text/html' }, json: () => mockInfos })
+    })
+    joinMediumInfo(true, env)(medium).then(res => {
+      expect(res).toEqual(medium)
     })
   })
 })
