@@ -9,7 +9,7 @@
 
 This package is used by [Me Salva Engineering Team](https://mesalva.com) to make requests to Api,
 using [HMAC authentication protocol](https://pt.wikipedia.org/wiki/HMAC) + [universal fetch](https://www.npmjs.com/package/universal-fetch) to make requests by
-server side (we use [express](https://www.npmjs.com/package/express)) + 
+server side (we use [express](https://www.npmjs.com/package/express)) +
 [Json Api Serializer](https://www.npmjs.com/package/json-api-serializer) to parse the api [JSON API BASED](http://jsonapi.org)
 to simple Javascript [Camel Case](https://en.wikipedia.org/wiki/Camel_case) Based objects
 
@@ -29,12 +29,11 @@ npm install --save @mesalva/b2b-api
 
 ## Configurations
 
+You will need these configuration vars:
 
-You will need these configuration vars: 
 ```
 MESALVA_HMAC, MESALVA_USER, MESALVA_PASSWORD, MESALVA_API, MESALVA_CLIENT
 ```
-
 
 **ALERT!!!!** - NEVER commit or send this variables to any place that you do not trust in security.
 
@@ -43,12 +42,15 @@ MESALVA_HMAC, MESALVA_USER, MESALVA_PASSWORD, MESALVA_API, MESALVA_CLIENT
 Creating a model
 
 [./examples/ExampleModelA.js](https://github.com/mesalva/js-api-request/blob/doc/readme/examples/ExampleModelA.js)
+
 ```js
 import MeSalva from '@mesalva/b2b-api'
 const MeSalvaApi = new MeSalva({ MESALVA_HMAC, MESALVA_USER, MESALVA_PASSWORD, MESALVA_API, MESALVA_CLIENT })
 
-MeSalvaApi.search("Any query")
-MeSalvaApi.getContent("a-permalink/public/inside/mesalva")
-MeSalvaApi.getMedium("a-permalink/permalink/of-a-lesson")//Will need authentication, fetch full content (with samba infos)
-MeSalvaApi.getMedium("a-permalink/permalink/of-a-lesson", false)//Will need authentication, without samba infos
+MeSalvaApi.search('Any query')
+MeSalvaApi.getContent('a-permalink/public/inside/mesalva')
+
+//Authentication needed
+MeSalvaApi.getMedium('a-permalink/permalink/of-a-lesson') //fetch full content (with samba infos)
+MeSalvaApi.getMedium('a-permalink/permalink/of-a-lesson', false) //Without samba infos
 ```
