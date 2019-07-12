@@ -39,6 +39,7 @@ function algoliaParsed(content) {
   return parsed
     .replace('process.env.MESALVA_ALGOLIA_ID', `'${process.env.MESALVA_ALGOLIA_ID}'`)
     .replace('process.env.MESALVA_ALGOLIA_KEY', `'${process.env.MESALVA_ALGOLIA_KEY}'`)
+    .replace('process.env.BFF_URL', `'${process.env.BFF_URL}'`)
 }
 
 function helpersParsed(content) {
